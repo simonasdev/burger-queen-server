@@ -4,7 +4,7 @@ var Gpio = require('pigpio').Gpio,
   button = new Gpio(15, {
     mode: Gpio.INPUT,
     pullUpDown: Gpio.PUD_DOWN,
-    edge: Gpio.FALLING_EDGE
+    edge: Gpio.EITHER_EDGE
   });
 
 button.on('interrupt', function (level) {
@@ -12,17 +12,22 @@ button.on('interrupt', function (level) {
 
   if (pulse === 2500) {
     turn(pulse);
-
-    setTimeout(function () {
-      pulse = 500;
-      console.log(pulse);
-      turn(pulse);
-    }, 1000);
+    pulse = 500;
+    console.log('1: ' + pulse);
+  } else if (getServoPulseWidth() === 2500) {
+    turn(pulse);
+    console.log('2: ' + pulse);
   } else {
     turn(0);
+    pulse = 2500;
+    console.log('3: ' + pulse);
   }
 });
 
 function turn (pulse) {
   return motor.servoWrite(pulse);
+}
+
+function getPulse () {
+  return motor.getServoPulseWidth();
 }
