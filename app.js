@@ -1,22 +1,21 @@
 var Gpio = require('pigpio').Gpio,
-  motor = new Gpio(18, {mode: Gpio.OUTPUT}),
-  pulseWidth = 1000,
-  increment = 100,
+  motor = new Gpio(18, { mode: Gpio.OUTPUT }),
+  pulse = 1000,
   button = new Gpio(15, {
     mode: Gpio.INPUT,
     pullUpDown: Gpio.PUD_DOWN,
     edge: Gpio.EITHER_EDGE
   });
 
-button.on('interrupt', function (level) {
-  console.log(pulseWidth);
+button.on('interrupt', function () {
+  console.log(pulse);
+  motor.servoWrite(pulse);
 
-  motor.servoWrite(pulseWidth);
-
-  pulseWidth += increment;
-  if (pulseWidth >= 2000) {
-    increment = -100;
-  } else if (pulseWidth <= 1000) {
-    increment = 100;
+  if (pulse === 1000) {
+    pulse = 900;
+  } else if (pulse === 0) {
+    pulse = 0;
+  } else {
+    pulse = 1000;
   }
 });
