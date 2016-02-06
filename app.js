@@ -4,7 +4,7 @@ var Gpio = require('pigpio').Gpio,
   button = new Gpio(15, {
     mode: Gpio.INPUT,
     pullUpDown: Gpio.PUD_DOWN,
-    edge: Gpio.RISING_EDGE,
+    edge: Gpio.FALLING_EDGE
   });
 
 button.on('interrupt', function (level) {
