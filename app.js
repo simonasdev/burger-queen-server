@@ -14,7 +14,7 @@ button.on('interrupt', function (level) {
     turn(pulse);
     pulse = 500;
     console.log('1: ' + pulse);
-  } else if (getServoPulseWidth() === 2500) {
+  } else if (getPulse() === 2500) {
     turn(pulse);
     console.log('2: ' + pulse);
   } else {
