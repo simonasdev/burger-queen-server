@@ -1,14 +1,24 @@
 var Gpio = require('pigpio').Gpio,
   motor = new Gpio(18, { mode: Gpio.OUTPUT }),
-  pulse = 1000,
+  pulse = 2500,
   button = new Gpio(15, {
-    mode: Gpio.INPUT,
-    pullUpDown: Gpio.PUD_DOWN,
-    edge: Gpio.EITHER_EDGE
+    mode: Gpio.INPUT
   });
 
 button.on('interrupt', function (level) {
   console.log(level)
+
+  if (pulse === 2500) {
+    turn(pulse);
+
+    setTimeout(function () {
+      pulse = 500;
+      console.log(pulse);
+      turn(pulse);
+    }, 1000);
+  } else {
+    turn(0);
+  }
 });
 
 function turn (pulse) {
