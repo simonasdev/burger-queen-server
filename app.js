@@ -9,7 +9,7 @@ var Gpio = require('pigpio').Gpio,
 
 button.on('interrupt', function () {
   console.log(motor);
-  turn(pulse);
+  // turn(pulse);
   pulse = 0;
 });
 
