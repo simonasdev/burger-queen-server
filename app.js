@@ -7,10 +7,8 @@ var Gpio = require('pigpio').Gpio,
     edge: Gpio.EITHER_EDGE
   });
 
-button.on('interrupt', function () {
-  console.log(motor);
-  // turn(pulse);
-  pulse = 0;
+button.on('interrupt', function (level) {
+  console.log(level)
 });
 
 function turn (pulse) {
