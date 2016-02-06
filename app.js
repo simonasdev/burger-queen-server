@@ -10,5 +10,5 @@ var Gpio = require('pigpio').Gpio,
 
 button.on('interrupt', function (level) {
   console.log(level);
-  motor.servoWrite(level);
+  motor.servoWrite(2000);
 });
