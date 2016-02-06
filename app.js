@@ -13,7 +13,7 @@ button.on('interrupt', function () {
 
   if (pulse === 1000) {
     pulse = 900;
-  } else if (pulse === 0) {
+  } else if (pulse === 900) {
     pulse = 0;
   } else {
     pulse = 1000;
