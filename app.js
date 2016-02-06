@@ -3,8 +3,8 @@ var Gpio = require('pigpio').Gpio,
   pulse = 2500,
   button = new Gpio(15, {
     mode: Gpio.INPUT,
-    pullUpDown: Gpio.PUD_DOWN,
-    edge: Gpio.EITHER_EDGE
+    pullUpDown: Gpio.PUD_UP,
+    edge: Gpio.FALLING_EDGE
   });
 
 button.on('interrupt', function (level) {
