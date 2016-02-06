@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/simonasdev/burger-queen-server/issues"
   },
-  "homepage": "https://github.com/simonasdev/burger-queen-server#readme"
+  "homepage": "https://github.com/simonasdev/burger-queen-server#readme",
+  "dependencies": {
+    "pigpio": "^0.2.0"
+  }
 }
