@@ -8,14 +8,13 @@ var Gpio = require('pigpio').Gpio,
   });
 
 button.on('interrupt', function () {
-  console.log(pulse);
-  motor.servoWrite(pulse);
-
-  if (pulse === 1000) {
-    pulse = 900;
-  } else if (pulse === 900) {
-    pulse = 0;
-  } else {
-    pulse = 1000;
-  }
+  console.log(motor);
+  turn(1000);
+  turn(-1000);
+  turn(0);
+  console.log(motor);
 });
+
+function turn (pulse) {
+  return motor.servoWrite(pulse);
+}
