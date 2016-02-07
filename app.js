@@ -40,7 +40,7 @@ function handleInterrupt (level) {
 
 function initialize () {
   turn(bottomMotor, 2500);
-  turn(topMotor, 1700);
+  turn(topMotor, 500);
   // nextStage().then(nextStage).then(nextStage).finally(function () {
   //   timeout = null;
   // });
