@@ -9,8 +9,7 @@ var Gpio = require('pigpio').Gpio,
   timeout = null;
 
 button.on('interrupt', function (level) {
-  if (timeout) return;
-  console.log(level)
+  if (level !== 0 || timeout) return;
 
   timeout = setTimeout(function () {
     timeout = null;
