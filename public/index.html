@@ -17,14 +17,17 @@
         position: fixed;
         left: 50%;
         transform: translate(-50%);
-        transition: margin 300ms ease-in-out;
+        transition: all 300ms ease-in-out;
         margin-top: -30px;
+        opacity: 0;
       }
       #alert.Yep {
+        opacity: 1;
         margin-top: 10px;
         color: green;
       }
       #alert.Nop, #alert.undefined {
+        opacity: 1;
         margin-top: 10px;
         color: red;
       }
@@ -46,6 +49,10 @@
               var response = request.responseText;
               alert.innerHTML = response;
               alert.className = response;
+
+              setTimeout(function () {
+                alert.className = '';
+              }, 2000);
           };
 
           request.open("POST", "http://localhost:3000/feed", true);
