@@ -20,7 +20,8 @@ button.on('interrupt', function (level) {
 });
 
 function initialize () {
-    turn(bottomMotor, 1505);
+  turn(bottomMotor, 2500);
+  turn(topMotor, 1700);
   // nextStage().then(nextStage).then(nextStage).finally(function () {
   //   timeout = null;
   // });
