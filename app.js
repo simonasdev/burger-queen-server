@@ -19,15 +19,16 @@ button.on('interrupt', function (level) {
 });
 
 function initialize () {
-  nextStage().then(nextStage).then(nextStage).finally(function () {
-    timeout = null;
-  });
+  nextStage()
+    // .then(nextStage).then(nextStage).finally(function () {
+    //   timeout = null;
+    // });
 }
 
 function nextStage () {
   return new Promise(function (resolve, reject) {
     turn(topMotor, 2500);
-    setTimeout(stop.bind(null, topMotor), 20);
+    setTimeout(stop.bind(null, topMotor), 2000);
     // turn topMotor 60 deg and turn bottomMotor 60 deg
     // topMotor rumble
     // turn topMotor 60 deg
