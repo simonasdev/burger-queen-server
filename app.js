@@ -26,7 +26,7 @@ button.on('interrupt', function (level) {
     }
 
     timeout = null;
-  }, 1000);
+  }, 200);
 });
 
 function turn (pulse) {
