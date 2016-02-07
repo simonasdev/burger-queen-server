@@ -1,5 +1,5 @@
 var Gpio = require('pigpio').Gpio,
-    topMotor = new Gpio(18, { mode: Gpio.OUTPUT }),
+    // topMotor = new Gpio(18, { mode: Gpio.OUTPUT }),
     bottomMotor = new Gpio(23, { mode: Gpio.OUTPUT }),
     pulse = 2500,
     button = new Gpio(15, {
@@ -17,7 +17,7 @@ button.on('interrupt', function (level) {
 });
 
 function initialize () {
-  turn(topMotor, 1500)
+  // turn(topMotor, 1500)
   turn(bottomMotor, 1500)
   // nextStage().then(nextStage).then(nextStage).finally(function () {
   //   timeout = null;
