@@ -37,7 +37,7 @@ app.listen(port, function () {
 button.on('interrupt', handleInterrupt);
 
 function handleInterrupt (level) {
-  console.log('interrupt');
+  console.log(level);
   if (level !== 0 || timeout) return false;
   console.log('initializing');
 
