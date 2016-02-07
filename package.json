@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/simonasdev/burger-queen-server#readme",
   "dependencies": {
+    "express": "^4.13.4",
     "pigpio": "^0.2.0"
   }
 }

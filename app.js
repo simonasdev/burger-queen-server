@@ -7,17 +7,34 @@ var Gpio = require('pigpio').Gpio,
       pullUpDown: Gpio.PUD_UP,
       edge: Gpio.FALLING_EDGE
     }),
-    timeout = null,
-    ratio = 80 / 14,
-    layerAngle = 60,
-    motorAngle = ratio * layerAngle;
+    timeout = null;
+    // ratio = 80 / 14,
+    // layerAngle = 60,
+    // motorAngle = ratio * layerAngle;
 
-button.on('interrupt', function (level) {
-  if (level !== 0 || timeout) return;
+var express = require('express'),
+    app = express();
+
+app.post('/feed', function (req, res) {
+  response = handleInterrupt(0) ? 'Yep' : 'Nop';
+
+  res.send(response);
+});
+
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!');
+});
+
+
+button.on('interrupt', handleInterrupt);
+
+function handleInterrupt (level) {
+  if (level !== 0 || timeout) return false;
   console.log(level);
 
   timeout = setTimeout(initialize, 200);
-});
+  return true;
+}
 
 function initialize () {
   turn(bottomMotor, 2500);
