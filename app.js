@@ -55,8 +55,8 @@ function initialize () {
     turn(topMotor, 1000);
 
     making = true;
-    timeout = false;
   }
+  timeout = null;
   // nextStage(true).then(nextStage).then(nextStage).then(function () {
   //   timeout = null;
   // });
