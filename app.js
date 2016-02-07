@@ -13,7 +13,8 @@ var Gpio = require('pigpio').Gpio,
     }),
     timeout = null,
     port = 5000,
-    counter = 0;
+    counter = 0,
+    making = false;
     // ratio = 80 / 14,
     // layerAngle = 60,
     // motorAngle = ratio * layerAngle;
@@ -44,8 +45,17 @@ function handleInterrupt (level) {
 }
 
 function initialize () {
-  turn(bottomMotor, 2000);
-  turn(topMotor, 1000);
+  if (making) {
+    stop(bottomMotor);
+    stop(topMotor);
+
+    making = false;
+  } else {
+    turn(bottomMotor, 2000);
+    turn(topMotor, 1000);
+
+    making = true;
+  }
   // nextStage(true).then(nextStage).then(nextStage).then(function () {
   //   timeout = null;
   // });
