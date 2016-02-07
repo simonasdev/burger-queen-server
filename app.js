@@ -1,6 +1,6 @@
 var Gpio = require('pigpio').Gpio,
-    topMotor = new Gpio(18, { mode: Gpio.OUTPUT }),
-    bottomMotor = new Gpio(23, { mode: Gpio.OUTPUT }),
+    topMotor = new Gpio(23, { mode: Gpio.OUTPUT }),
+    bottomMotor = new Gpio(18, { mode: Gpio.OUTPUT }),
     pulse = 2500,
     button = new Gpio(15, {
       mode: Gpio.INPUT,
