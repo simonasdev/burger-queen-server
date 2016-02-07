@@ -28,8 +28,8 @@ function initialize () {
 function nextStage () {
   turn(topMotor, 2500);
   turn(bottomMotor, 2500);
-  setTimeout(stop.bind(null, topMotor), 2000);
-  setTimeout(stop.bind(null, bottomMotor), 2000);
+  // setTimeout(stop.bind(null, topMotor), 2000);
+  // setTimeout(stop.bind(null, bottomMotor), 2000);
   return new Promise(function (resolve, reject) {
     // turn topMotor 60 deg and turn bottomMotor 60 deg
     // topMotor rumble
