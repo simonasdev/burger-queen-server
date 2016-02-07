@@ -1,7 +1,6 @@
 var Gpio = require('pigpio').Gpio,
     topMotor = new Gpio(23, { mode: Gpio.OUTPUT }),
     bottomMotor = new Gpio(18, { mode: Gpio.OUTPUT }),
-    pulse = 2500,
     button = new Gpio(15, {
       mode: Gpio.INPUT,
       pullUpDown: Gpio.PUD_UP,
@@ -46,8 +45,9 @@ function handleInterrupt (level) {
 }
 
 function initialize () {
-  turn(bottomMotor, 2500);
-  turn(topMotor, 500);
+  console.log('interrupt')
+  turn(bottomMotor, 1600);
+  turn(topMotor, 1400);
   // nextStage(true).then(nextStage).then(nextStage).then(function () {
   //   timeout = null;
   // });
@@ -55,16 +55,16 @@ function initialize () {
 
 function nextStage (bindHandler) {
   return new Promise(function (resolve, reject) {
-    turn(topMotor, 500);
-    turn(bottomMotor, 2500);
+    turn(topMotor, 1400);
+    turn(bottomMotor, 1600);
 
     waitForAngle(bindHandler).then(function () {
       stop(topMotor);
       stop(bottomMotor);
 
       setTimout(function () {
-        turn(topMotor, 500);
-        turn(topMotor, 2500);
+        turn(topMotor, 1400);
+        turn(topMotor, 1600);
 
         waitForAngle().then(resolve);
       }, 1000);
@@ -86,11 +86,17 @@ waitForAngle(true).then(function () {
 })
 
 function waitForAngle (bindHandler) {
+  var timeut = null;
+
   return new Promise(function (resolve, reject) {
     if (bindHandler) {
       counterButton.on('interrupt', function (level) {
-        if (level !== 0) return false;
+        if (level !== 0 || timeut) return false;
         console.log(counter)
+
+        timeut = setTimeout(function () {
+
+        }, 100);
 
         counter++;
 
@@ -116,7 +122,7 @@ function rumble (motor, initialMikros) {
   turn(motor, microseconds);
 
   interval = setInterval(function () {
-    microseconds = microseconds === 2500 ? 500 : 2500;
+    microseconds = microseconds === 1600 ? 1400 : 1600;
 
     turn(motor, microseconds);
     rumbleCount++;
