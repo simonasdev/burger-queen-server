@@ -44,10 +44,10 @@ function handleInterrupt (level) {
   return true;
 }
 
+turn(bottomMotor, 1600);
+turn(topMotor, 1400);
 function initialize () {
   console.log('interrupt')
-  turn(bottomMotor, 1600);
-  turn(topMotor, 1400);
   // nextStage(true).then(nextStage).then(nextStage).then(function () {
   //   timeout = null;
   // });
