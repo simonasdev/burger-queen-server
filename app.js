@@ -39,7 +39,7 @@ function nextStage () {
 }
 
 function stop (motor) {
-  return turn(motor, 1500);
+  return turn(motor, 0);
 }
 
 function turn (motor, microseconds) {
