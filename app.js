@@ -34,20 +34,19 @@ app.listen(port, function () {
 });
 
 // Raspberry
-// button.on('interrupt', handleInterrupt);
+button.on('interrupt', handleInterrupt);
 
 function handleInterrupt (level) {
+  console.log('interrupt');
   if (level !== 0 || timeout) return false;
-  console.log(level);
+  console.log('initializing');
 
   timeout = setTimeout(initialize, 200);
   return true;
 }
 
-turn(bottomMotor, 1600);
-turn(topMotor, 1400);
 function initialize () {
-  console.log('interrupt')
+  console.log('initialized');
   // nextStage(true).then(nextStage).then(nextStage).then(function () {
   //   timeout = null;
   // });
@@ -77,13 +76,13 @@ function nextStage (bindHandler) {
   });
 }
 
-waitForAngle(true).then(function () {
-  console.log('bra')
+// waitForAngle(true).then(function () {
+//   console.log('bra')
 
-  waitForAngle().then(function () {
-    console.log('works!')
-  })
-})
+//   waitForAngle().then(function () {
+//     console.log('works!')
+//   })
+// })
 
 function waitForAngle (bindHandler) {
   var timeut = null;
