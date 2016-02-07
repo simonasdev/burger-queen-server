@@ -27,7 +27,7 @@ button.on('interrupt', function (level) {
       pulse = 2500;
       console.log('3: ' + pulse);
     }
-  }, 10);
+  }, 50);
 });
 
 function turn (pulse) {
