@@ -36,7 +36,6 @@ app.listen(port, function () {
 
 // Raspberry
 button.on('interrupt', handleInterrupt);
-counterButton.on('interrupt', incrementCounter);
 
 function handleInterrupt (level) {
   if (level !== 0 || timeout) return false;
