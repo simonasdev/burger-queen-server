@@ -7,7 +7,14 @@ var Gpio = require('pigpio').Gpio,
       pullUpDown: Gpio.PUD_UP,
       edge: Gpio.FALLING_EDGE
     }),
-    timeout = null;
+    counterButton = new Gpio(15, {
+      mode: Gpio.INPUT,
+      pullUpDown: Gpio.PUD_UP,
+      edge: Gpio.FALLING_EDGE
+    }),
+    timeout = null,
+    port = 5000,
+    counter = 0;
     // ratio = 80 / 14,
     // layerAngle = 60,
     // motorAngle = ratio * layerAngle;
@@ -23,12 +30,13 @@ app.post('/feed', function (req, res) {
   res.send(response);
 });
 
-app.listen(5000, function () {
-  console.log('Pi listening on port 3000!');
+app.listen(port, function () {
+  console.log('Pi listening on port ' + port);
 });
 
-
+// Raspberry
 button.on('interrupt', handleInterrupt);
+counterButton.on('interrupt', incrementCounter);
 
 function handleInterrupt (level) {
   if (level !== 0 || timeout) return false;
@@ -39,18 +47,30 @@ function handleInterrupt (level) {
 }
 
 function initialize () {
-  turn(bottomMotor, 2500);
-  turn(topMotor, 500);
-  // nextStage().then(nextStage).then(nextStage).finally(function () {
-  //   timeout = null;
-  // });
+  // turn(bottomMotor, 2500);
+  // turn(topMotor, 500);
+  nextStage(true).then(nextStage).then(nextStage).then(function () {
+    timeout = null;
+  });
 }
 
-function nextStage () {
+function nextStage (bindHandler) {
   return new Promise(function (resolve, reject) {
-    // turn(topMotor, 2500);
-    // setTimeout(stop.bind(topMotor), 2800);
-    // setTimeout(stop.bind(bottomMotor), 2800);
+    turn(topMotor, 500);
+    turn(bottomMotor, 2500);
+
+    waitForAngle(bindHandler).then(function () {
+      stop(topMotor);
+      stop(bottomMotor);
+
+      setTimout(function () {
+        turn(topMotor, 500);
+        turn(topMotor, 2500);
+
+        waitForAngle().then(resolve);
+      }, 1000);
+    });
+
     // turn topMotor 60 deg and turn bottomMotor 60 deg
     // topMotor rumble
     // turn topMotor 60 deg
@@ -58,8 +78,46 @@ function nextStage () {
   });
 }
 
-function stop () {
-  return turn(this, 0);
+function waitForAngle (bindHandler) {
+  return new Promise(function (resolve, reject) {
+    if (bindHandler) {
+      counterButton.on('interrupt', function (level) {
+        if (level !== 0) return false;
+
+        counter++;
+
+        if (counter === 13 || counter === 27 || counter === 40 || counter === 53 || counter === 67 || counter === 80) {
+          counter = counter % 80;
+
+          counterButton.disableInterrupt();
+          resolve();
+        }
+      });
+    } else {
+      counterButton.enableInterrupt(Gpio.FALLING_EDGE);
+    }
+  });
+}
+
+function rumble (motor, initialMikros) {
+  var microseconds = initialMikros,
+      interval = null,
+      rumbleCount = 0;
+
+  turn(motor, microseconds);
+
+  interval = setInterval(function () {
+    microseconds = microseconds === 2500 ? 500 : 2500;
+
+    turn(motor, microseconds);
+    rumbleCount++;
+
+    if (rumbleCount >= 4) clearInterval(interval);
+  }, 20);
+}
+
+function stop (motor) {
+  return turn(motor, 0);
 }
 
 function turn (motor, microseconds) {
