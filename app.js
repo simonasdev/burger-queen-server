@@ -7,7 +7,7 @@ var Gpio = require('pigpio').Gpio,
       pullUpDown: Gpio.PUD_UP,
       edge: Gpio.FALLING_EDGE
     }),
-    counterButton = new Gpio(15, {
+    counterButton = new Gpio(22, {
       mode: Gpio.INPUT,
       pullUpDown: Gpio.PUD_UP,
       edge: Gpio.FALLING_EDGE
@@ -35,7 +35,7 @@ app.listen(port, function () {
 });
 
 // Raspberry
-button.on('interrupt', handleInterrupt);
+// button.on('interrupt', handleInterrupt);
 
 function handleInterrupt (level) {
   if (level !== 0 || timeout) return false;
@@ -46,11 +46,11 @@ function handleInterrupt (level) {
 }
 
 function initialize () {
-  // turn(bottomMotor, 2500);
-  // turn(topMotor, 500);
-  nextStage(true).then(nextStage).then(nextStage).then(function () {
-    timeout = null;
-  });
+  turn(bottomMotor, 2500);
+  turn(topMotor, 500);
+  // nextStage(true).then(nextStage).then(nextStage).then(function () {
+  //   timeout = null;
+  // });
 }
 
 function nextStage (bindHandler) {
