@@ -1,0 +1,39 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Make me a burger</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+      img {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -70%);
+      }
+    </style>
+  </head>
+  <body>
+    <img src="/burger.jpg" id="burger">
+    <div id="alert"></div>
+
+    <script type="text/javascript">
+      (function () {
+        var alert = document.getElementById('alert');
+
+        document.getElementById('burger').onclick = function () {
+          var request = new XMLHttpRequest();
+
+          request.onreadystatechange = function () {
+            if (request.readyState == 4 && request.status == 200) alert.innerHTML = request.responseText;
+          };
+
+          request.open("POST", "http://localhost:3000/feed", true);
+          request.send();
+        };
+      })();
+    </script>
+  </body>
+</html>
