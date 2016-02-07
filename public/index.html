@@ -13,11 +13,26 @@
         left: 50%;
         transform: translate(-50%, -70%);
       }
+      #alert {
+        position: fixed;
+        left: 50%;
+        transform: translate(-50%);
+        transition: margin 300ms ease-in-out;
+        margin-top: -30px;
+      }
+      #alert.Yep {
+        margin-top: 10px;
+        color: green;
+      }
+      #alert.Nop, #alert.undefined {
+        margin-top: 10px;
+        color: red;
+      }
     </style>
   </head>
   <body>
     <img src="/burger.jpg" id="burger">
-    <div id="alert"></div>
+    <div id="alert">Yep</div>
 
     <script type="text/javascript">
       (function () {
@@ -27,7 +42,10 @@
           var request = new XMLHttpRequest();
 
           request.onreadystatechange = function () {
-            if (request.readyState == 4 && request.status == 200) alert.innerHTML = request.responseText;
+            if (request.readyState == 4 && request.status === 200)
+              var response = request.responseText;
+              alert.innerHTML = response;
+              alert.className = response;
           };
 
           request.open("POST", "http://localhost:3000/feed", true);
