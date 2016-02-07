@@ -1,6 +1,6 @@
 var Gpio = require('pigpio').Gpio,
     topMotor = new Gpio(18, { mode: Gpio.OUTPUT }),
-    bottomMotor = new Gpio(23, { mode: Gpio.OUTPUT }),
+    // bottomMotor = new Gpio(23, { mode: Gpio.OUTPUT }),
     pulse = 2500,
     button = new Gpio(15, {
       mode: Gpio.INPUT,
@@ -27,8 +27,9 @@ function initialize () {
 
 function nextStage () {
   return new Promise(function (resolve, reject) {
-    turn(topMotor, 2500);
+    // turn(topMotor, 2500);
     turn(bottomMotor, 2500);
+    setTimeout(stop.bind(topMotor), 2800);
     // turn topMotor 60 deg and turn bottomMotor 60 deg
     // topMotor rumble
     // turn topMotor 60 deg
@@ -36,8 +37,8 @@ function nextStage () {
   });
 }
 
-function stop (motor) {
-  return turn(motor, 0);
+function stop () {
+  return turn(this, 0);
 }
 
 function turn (motor, microseconds) {
