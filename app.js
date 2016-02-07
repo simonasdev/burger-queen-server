@@ -37,16 +37,15 @@ app.listen(port, function () {
 button.on('interrupt', handleInterrupt);
 
 function handleInterrupt (level) {
-  console.log(level);
   if (level !== 0 || timeout) return false;
-  console.log('initializing');
 
   timeout = setTimeout(initialize, 200);
   return true;
 }
 
 function initialize () {
-  console.log('initialized');
+  turn(bottomMotor, 2500);
+  turn(topMotor, 500);
   // nextStage(true).then(nextStage).then(nextStage).then(function () {
   //   timeout = null;
   // });
