@@ -12,8 +12,6 @@ button.on('interrupt', function (level) {
   if (level !== 0 || timeout) return;
 
   timeout = setTimeout(function () {
-    timeout = null;
-
     if (pulse === 2500) {
       turn(pulse);
       pulse = 500;
@@ -26,6 +24,8 @@ button.on('interrupt', function (level) {
       pulse = 2500;
       console.log('3: ' + pulse);
     }
+
+    timeout = null;
   }, 50);
 });
 
