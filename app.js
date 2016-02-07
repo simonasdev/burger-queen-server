@@ -78,15 +78,25 @@ function nextStage (bindHandler) {
   });
 }
 
+waitForAngle(true).then(function () {
+  console.log('bra')
+
+  waitForAngle().then(function () {
+    console.log('works!')
+  })
+})
+
 function waitForAngle (bindHandler) {
   return new Promise(function (resolve, reject) {
     if (bindHandler) {
       counterButton.on('interrupt', function (level) {
         if (level !== 0) return false;
+        console.log(counter)
 
         counter++;
 
         if (counter === 13 || counter === 27 || counter === 40 || counter === 53 || counter === 67 || counter === 80) {
+          console.log('tick!');
           counter = counter % 80;
 
           counterButton.disableInterrupt();
