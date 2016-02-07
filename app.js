@@ -20,15 +20,15 @@ button.on('interrupt', function (level) {
 });
 
 function initialize () {
-  nextStage().then(nextStage).then(nextStage).finally(function () {
-    timeout = null;
-  });
+    turn(bottomMotor, 1505);
+  // nextStage().then(nextStage).then(nextStage).finally(function () {
+  //   timeout = null;
+  // });
 }
 
 function nextStage () {
   return new Promise(function (resolve, reject) {
     // turn(topMotor, 2500);
-    turn(bottomMotor, 1505);
     // setTimeout(stop.bind(topMotor), 2800);
     // setTimeout(stop.bind(bottomMotor), 2800);
     // turn topMotor 60 deg and turn bottomMotor 60 deg
